@@ -6,7 +6,12 @@
     --link-color: #000000;
     --border-color: #482936;
     --secondary-text: #666666;
-    --code-bg: #f6f8fa;
+    --code-bg: #faf4ed; /* Rose Pine Dawn base */
+    --code-text: #575279; /* Rose Pine Dawn text */
+    --pseudocode-bg: #fffaf5;
+    --pseudocode-line: #f0e6dd;
+    --pseudocode-accent: #907aa9;
+    --pseudocode-label: #286983;
     --blockquote-color: #57606a;
     --blockquote-border: #d0d7de;
     --font-body: system-ui;
@@ -19,7 +24,12 @@
     --link-color: #b0b0b0;
     --border-color: #8b5a7a;
     --secondary-text: #aaaaaa;
-    --code-bg: #2d2d2d;
+    --code-bg: #191724; /* Rose Pine Main base */
+    --code-text: #ebbcba; /* Rose Pine Main iris */
+    --pseudocode-bg: #1f1d2e;
+    --pseudocode-line: #302e3f;
+    --pseudocode-accent: #c4a7e7;
+    --pseudocode-label: #9ccfd8;
     --blockquote-color: #a0a0a0;
     --blockquote-border: #404040;
 }
@@ -70,16 +80,15 @@ a:hover {
 }
 
 .markdown-body pre {
-    padding: 16px;
     overflow: auto;
     border-radius: 10px;
-    background-color: var(--code-bg);
 }
 
 .markdown-body code {
     padding: 0.2em 0.4em;
     font-size: 85%;
     background-color: var(--code-bg);
+    color: var(--code-text);
     border-radius: 6px;
 }
 
@@ -88,8 +97,152 @@ a:hover {
 .markdown-body pre > code {
     padding: 0;
     font-size: 100%;
-    background-color: var(--code-bg);
+    background: transparent;
     border: 0;
+}
+
+/* code block toolbar */
+
+.markdown-body .highlight {
+    position: relative;
+    border-radius: 10px;
+    margin-bottom: 1em;
+    background-color: var(--code-bg);
+}
+
+.code-block-toolbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
+}
+
+.code-copy-button {
+    background: var(--code-bg);
+    border: none;
+    color: var(--secondary-text);
+    cursor: pointer;
+    font-size: 0.75rem;
+    padding: 6px 10px;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-radius: 0 10px 0 6px;
+    opacity: 0.8;
+    transition: all 0.2s;
+}
+
+.code-copy-button:hover {
+    opacity: 1;
+    color: var(--text-color);
+    background: var(--code-bg);
+}
+
+.code-copy-language {
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.code-copy-action {
+    display: none;
+    border-left: 1px solid var(--border-color);
+    padding-left: 6px;
+    margin-left: 6px;
+}
+
+.code-copy-button:hover .code-copy-action {
+    display: inline;
+}
+
+/* pseudocode */
+
+.pseudocode-block {
+    margin: 1.2em 0;
+    overflow: hidden;
+    border: 1px solid var(--pseudocode-line);
+    border-radius: 8px;
+    background: var(--pseudocode-bg);
+    color: var(--text-color);
+    font-size: 0.94em;
+}
+
+.pseudocode-title {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--pseudocode-line);
+    color: var(--pseudocode-accent);
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.pseudocode-body {
+    counter-reset: pseudocode-step;
+    padding: 8px 0;
+}
+
+.pseudocode-row {
+    display: grid;
+    grid-template-columns: 3.2rem max-content minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: baseline;
+    padding: 5px 14px;
+    line-height: 1.7;
+}
+
+.pseudocode-step {
+    counter-increment: pseudocode-step;
+}
+
+.pseudocode-step::before {
+    content: counter(pseudocode-step);
+    color: var(--secondary-text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.82em;
+    text-align: right;
+}
+
+.pseudocode-meta::before {
+    content: "";
+}
+
+.pseudocode-label {
+    color: var(--pseudocode-label);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pseudocode-content {
+    min-width: 0;
+    padding-left: calc(var(--pseudo-indent, 0) * 1.2rem);
+    overflow-wrap: normal;
+}
+
+.pseudocode-label:empty {
+    display: none;
+}
+
+.pseudocode-label:empty + .pseudocode-content {
+    grid-column: 2 / 4;
+}
+
+.pseudocode-block .katex {
+    font-size: 1em;
+}
+
+@media screen and (max-width: 600px) {
+    .pseudocode-title {
+        padding: 9px 12px;
+    }
+
+    .pseudocode-row {
+        grid-template-columns: 2.4rem max-content minmax(0, 1fr);
+        column-gap: 10px;
+        padding: 5px 12px;
+    }
+
+    .pseudocode-content {
+        padding-left: calc(var(--pseudo-indent, 0) * 0.9rem);
+    }
 }
 
 /* i18n */
