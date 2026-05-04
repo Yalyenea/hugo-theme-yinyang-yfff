@@ -1,37 +1,37 @@
 /* global */
 
 :root {
-    --bg-color: #ffffff;
-    --text-color: #000000;
-    --link-color: #000000;
-    --border-color: #482936;
-    --secondary-text: #666666;
-    --code-bg: #faf4ed; /* Rose Pine Dawn base */
-    --code-text: #575279; /* Rose Pine Dawn text */
-    --pseudocode-bg: #fffaf5;
-    --pseudocode-line: #f0e6dd;
+    --bg-color: #faf4ed;
+    --text-color: #575279;
+    --link-color: #286983;
+    --border-color: #cecacd;
+    --secondary-text: #797593;
+    --code-bg: #fffaf3;
+    --code-text: #575279;
+    --pseudocode-bg: #fffaf3;
+    --pseudocode-line: #dfdad9;
     --pseudocode-accent: #907aa9;
     --pseudocode-label: #286983;
-    --blockquote-color: #57606a;
-    --blockquote-border: #d0d7de;
+    --blockquote-color: #797593;
+    --blockquote-border: #cecacd;
     --font-body: system-ui;
     --font-title: serif;
 }
 
 [data-theme="dark"] {
-    --bg-color: #1a1a1a;
-    --text-color: #e0e0e0;
-    --link-color: #b0b0b0;
-    --border-color: #8b5a7a;
-    --secondary-text: #aaaaaa;
-    --code-bg: #191724; /* Rose Pine Main base */
-    --code-text: #ebbcba; /* Rose Pine Main iris */
-    --pseudocode-bg: #1f1d2e;
-    --pseudocode-line: #302e3f;
+    --bg-color: #232136;
+    --text-color: #e0def4;
+    --link-color: #c4a7e7;
+    --border-color: #56526e;
+    --secondary-text: #908caa;
+    --code-bg: #2a273f;
+    --code-text: #e0def4;
+    --pseudocode-bg: #2a273f;
+    --pseudocode-line: #393552;
     --pseudocode-accent: #c4a7e7;
     --pseudocode-label: #9ccfd8;
-    --blockquote-color: #a0a0a0;
-    --blockquote-border: #404040;
+    --blockquote-color: #908caa;
+    --blockquote-border: #56526e;
 }
 
 body {
