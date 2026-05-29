@@ -35,7 +35,7 @@ It keeps the original minimalist direction, but this fork has already diverged i
 From the root of your Hugo site:
 
 ```bash
-git submodule add git@github.com:Yalyenea/hugo-theme-yinyang-yffff.git themes/yinyang-my-fork
+git submodule add git@github.com:Yalyenea/hugo-theme-yinyang-yfff.git themes/yinyang-my-fork
 ```
 
 Then set the theme in your site config:
