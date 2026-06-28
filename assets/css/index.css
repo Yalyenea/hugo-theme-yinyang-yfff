@@ -14,8 +14,9 @@
     --pseudocode-label: #286983;
     --blockquote-color: #797593;
     --blockquote-border: #cecacd;
-    --font-body: system-ui;
-    --font-title: serif;
+    --font-body: "Latin Modern Roman", "LM Roman 10", "STZhongsong", "华文中宋", "Songti SC", serif;
+    --font-title: var(--font-body);
+    --font-mono: "Maple Mono NF", "Maple Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 [data-theme="dark"] {
@@ -85,6 +86,7 @@ a:hover {
 }
 
 .markdown-body code {
+    font-family: var(--font-mono);
     padding: 0.2em 0.4em;
     font-size: 85%;
     background-color: var(--code-bg);
@@ -196,7 +198,7 @@ a:hover {
 .pseudocode-step::before {
     content: counter(pseudocode-step);
     color: var(--secondary-text);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.82em;
     text-align: right;
 }
@@ -254,7 +256,9 @@ a:hover {
 /* header */
 
 .site-date-catalog {
+    font-family: var(--font-mono);
     font-size: 2rem;
+    font-variant-numeric: tabular-nums;
 }
 
 .header-title {
@@ -369,7 +373,7 @@ a:hover {
 
 .shortcut-key {
     min-width: 64px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-color);
@@ -388,7 +392,7 @@ a:hover {
     border: 1px solid var(--border-color);
     background: var(--bg-color);
     color: var(--secondary-text);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-family: var(--font-mono);
     font-size: 0.85rem;
     line-height: 1;
     padding: 8px 10px;
@@ -410,6 +414,12 @@ a:hover {
 .posts-line {
     font-size: 1.2rem;
     margin: 12px 0;
+}
+
+.posts-date {
+    color: var(--secondary-text);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
 }
 
 .posts-categories {
