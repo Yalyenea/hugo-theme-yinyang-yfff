@@ -405,20 +405,11 @@ html[lang^="zh"] .markdown-body,
     line-height: 1;
 }
 
-/* C: half-disk — filled half marks current mode (left = light, right = dark) */
 .theme-icon {
     display: block;
-    width: 1em;
-    height: 1em;
-}
-
-.theme-icon-half {
-    transform-origin: 12px 12px;
-    transition: transform 0.18s ease;
-}
-
-.theme-toggle[data-theme="dark"] .theme-icon-half {
-    transform: scaleX(-1);
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+    font-size: 0.95em;
+    line-height: 1;
 }
 
 .lang-switch-btn {
