@@ -161,7 +161,14 @@ button:focus-visible,
 
 .markdown-body pre {
     overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
     border-radius: 10px;
+}
+
+.markdown-body .chroma .cl {
+    min-width: 0;
+    flex: 1;
 }
 
 .markdown-body code {
