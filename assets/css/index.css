@@ -14,6 +14,10 @@
     --pseudocode-label: #286983;
     --blockquote-color: #797593;
     --blockquote-border: #cecacd;
+    --orbit-pine: #56949f;
+    --orbit-iris: #907aa9;
+    --orbit-rose: #b4637a;
+    --orbit-gold: #ea9d34;
     --font-body:
         "Latin Modern Roman", "LM Roman 10", "STZhongsong", "华文中宋",
         "Songti SC", serif;
@@ -37,14 +41,63 @@
     --pseudocode-label: #9ccfd8;
     --blockquote-color: #908caa;
     --blockquote-border: #56526e;
+    --orbit-pine: #9ccfd8;
+    --orbit-iris: #c4a7e7;
+    --orbit-rose: #eb6f92;
+    --orbit-gold: #f6c177;
 }
 
 body {
+    isolation: isolate;
     font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
     margin: 0 20px;
     background-color: var(--bg-color);
     color: var(--text-color);
+}
+
+.site-orbit {
+    position: fixed;
+    width: clamp(540px, 60vw, 760px);
+    aspect-ratio: 1;
+    right: clamp(-145px, calc((100vw - 1600px) / 6), -60px);
+    bottom: -85px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.85;
+    mask-image: linear-gradient(to right, transparent, #0006 32%, #000 65%);
+}
+
+.site-orbit svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.post .site-orbit {
+    opacity: 0.4;
+}
+
+::selection {
+    color: var(--bg-color);
+    background: var(--text-color);
+}
+
+@media screen and (max-width: 600px) {
+    .site-orbit {
+        opacity: 0.5;
+        bottom: -130px;
+    }
+
+    .post .site-orbit {
+        opacity: 0.2;
+    }
+}
+
+@media print {
+    .site-orbit {
+        display: none;
+    }
 }
 
 article {
@@ -815,6 +868,11 @@ html[lang^="zh"] .markdown-body,
 
 .search-page .pagefind-ui__result-excerpt {
     color: var(--secondary-text);
+}
+
+.search-page .pagefind-ui mark {
+    color: var(--text-color);
+    background: var(--border-color);
 }
 
 /* gallery */
