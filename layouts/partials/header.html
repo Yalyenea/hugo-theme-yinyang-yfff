@@ -1,40 +1,70 @@
-{{ $curLanguageName := .Site.Language.LanguageName }}
-<header>
-  <div class="header-title">
-    <a href="{{ .Site.LanguagePrefix }}/">{{ or .Site.Params.headTitle .Site.Params.author.name }}</a>
-  </div>
-  <div class="header-subtitle">{{ .Site.Params.Description }}</div>
-</header>
-<div class="row end-md header-items">
-  <div class="header-item">
-    <a href="/posts/">Posts</a>
-  </div>
-  <div class="header-item">
-    <a href="/weekly/">Weekly</a>
-  </div>
-  {{ range .Site.Params.socials -}}
-  <div class="header-item">
-    <a href="{{ .link }}" target="_blank">{{ .name }}</a>
-  </div>
+{{ $currentLang := .Site.Language.Lang }}
+<div class="site-orbit" aria-hidden="true">{{ partial "orbit.html" . }}</div>
+{{ $searchPage := site.GetPage "/search" }}
+{{ $otherLang := "" }}
+{{ $otherLangUrl := "" }}
+{{ range hugo.Sites -}}
+{{ if ne .Language.Lang $currentLang }}
+  {{ $otherLang = .Language.Lang }}
+  {{ $otherLangUrl = .Home.RelPermalink }}
+  {{ with index (where $.AllTranslations "Language.Lang" .Language.Lang) 0 }}
+    {{ $otherLangUrl = .RelPermalink }}
   {{ end }}
+{{ end }}
+{{ end }}
+<header class="site-header">
+  <a class="header-title" href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
 
-  <div class="header-item">
-    <button
-      id="theme-toggle"
-      type="button"
-      onclick="toggleTheme()"
-      class="theme-toggle"
-      aria-label="Toggle theme"
-      title="Toggle theme">
-      ◐
-    </button>
-  </div>
-</div>
-<div class="row">
-  {{ range .Site.Languages -}} {{ if ne .LanguageName $curLanguageName }}
-  <div class="lang-switch col-xs-3 col-xs-offset-9">
-    <a href="/{{ .Lang }}/">{{ .LanguageName }}</a>
-  </div>
-  {{ end }} {{ end }}
-</div>
-<div class="header-line"></div>
+  <nav class="header-nav" aria-label="{{ i18n "siteNavigation" }}">
+    <div class="header-links">
+      {{ range .Site.Menus.main }}
+        {{ $visible := not .PageRef }}
+        {{ with .Page }}
+          {{ $visible = true }}
+          {{ if .IsSection }}{{ $visible = gt (len .RegularPagesRecursive) 0 }}{{ end }}
+        {{ end }}
+        {{ if and $visible .URL }}<a href="{{ .URL }}">{{ .Name }}</a>{{ end }}
+      {{ end }}
+    </div>
+
+    <div class="header-tools">
+      {{ with $searchPage }}
+      <a class="header-tool header-tool-icon" href="{{ .RelPermalink }}" aria-label="{{ i18n "navSearch" }}" title="{{ i18n "navSearch" }}">
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="1.8"></circle>
+          <path d="m16 16 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </a>
+      {{ end }}
+      {{ with .Site.Home.OutputFormats.Get "RSS" }}
+      <a class="header-tool header-tool-icon" href="{{ .RelPermalink }}" aria-label="{{ i18n "navRss" }}" title="{{ i18n "navRss" }}">
+        {{/* C: minimal feed — three shortening bars */}}
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M5 7.5h14M5 12h10M5 16.5h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        </svg>
+      </a>
+      {{ end }}
+      <button
+        id="theme-toggle"
+        type="button"
+        onclick="toggleTheme()"
+        class="header-tool header-tool-icon theme-toggle"
+        data-theme="light"
+        aria-label="{{ i18n "themeToggleLabel" }}"
+        title="{{ i18n "themeToggleLabel" }}">
+        <span class="theme-icon" aria-hidden="true">🌓</span>
+      </button>
+      {{ if $otherLang }}
+      <a
+        href="{{ $otherLangUrl }}"
+        class="header-tool lang-switch-btn"
+        data-lang="{{ $otherLang }}"
+        title="{{ i18n "langSwitchLabel" }}"
+        aria-label="{{ i18n "langSwitchLabel" }}">
+        <span class="lang-code">{{ if eq $currentLang "en" }}EN{{ else }}CN{{ end }}</span>
+      </a>
+      {{ end }}
+    </div>
+  </nav>
+</header>
+<div class="header-line" aria-hidden="true"></div>

@@ -1,38 +1,20 @@
+{{ define "main" }}
 {{ $prevPage := .PrevInSection }}
 {{ $nextPage := .NextInSection }}
-<!DOCTYPE html>
-<html lang="en">
-{{ partial "head.html" . }}
-
-<body>
-  <article
-    class="post {{ .Site.Language.LanguageName }}"
-    id="article"
-    {{ with $prevPage }}data-shortcut-prev="{{ .RelPermalink }}"{{ end }}
-    {{ with $nextPage }}data-shortcut-next="{{ .RelPermalink }}"{{ end }}>
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="site-header">
-          {{ partial "header.html" . }}
-        </div>
         <header class="post-header">
-          <h1 class="post-title">{{ .Title }}</h1>
+          <h1 class="post-title" data-pagefind-meta="title">{{ .Title }}</h1>
           {{ if in .Site.Params.mainSections .Type }}
-          <div class="row post-desc">
-            <div class="col-xs-6">
-              {{ if .Date }}
-              <time class="post-date" datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">
-                {{ .Date.Format "02 Jan 2006" }}
-              </time>
-              {{ end }}
+          <div class="post-desc">
+            {{ if .Date }}
+            <time class="post-date" datetime="{{ .Date.Format "2006-01-02 15:04:05 MST" }}">
+              {{ .Date.Format "02 Jan 2006" }}
+            </time>
+            {{ end }}
+            {{ if .Site.Params.author.name }}
+            <div class="post-author">
+              <a href="{{ .Site.Params.author.homepage }}">@{{ .Site.Params.author.name }}</a>
             </div>
-            <div class="col-xs-6">
-              {{ if .Site.Params.author.name }}
-              <div class="post-author">
-                <a target="_blank" href="{{ .Params.author.homepage }}">@{{ .Site.Params.author.name }}</a>
-              </div>
-              {{ end }}
-            </div>
+            {{ end }}
           </div>
           {{ end }}
         </header>
@@ -40,54 +22,30 @@
         {{ $toc := .TableOfContents }}
         {{ if gt (len (findRE "<li>" $toc)) 0 }}
         <aside class="toc" id="toc">
-          <div class="toc-title">目录</div>
-          <div class="toc-divider"></div>
-          {{ $toc }}
+          <button type="button" class="toc-toggle" id="toc-toggle" aria-expanded="false" aria-controls="toc-body">
+            <span class="toc-title">{{ i18n "tocTitle" }}</span>
+            <span class="toc-toggle-icon" aria-hidden="true"></span>
+          </button>
+          <div class="toc-body" id="toc-body">
+            <div class="toc-divider"></div>
+            {{ $toc }}
+          </div>
         </aside>
         {{ end }}
 
-        <div class="post-content markdown-body" id="post-content">
-          {{ .Site.Params.postHeaderContent | safeHTML }}
+        <div class="post-content markdown-body" id="post-content" data-pagefind-body>
           {{ .Content }}
         </div>
 
-        <div class="row middle-xs">
-          <div class="col-xs-12">
-            {{ range .Params.tags }}
-            <div class="post-tags">
-              <a href="{{ site.LanguagePrefix }}/tags/{{ lower . | urlize }}/">
-                {{ . }}
-              </a>
-            </div>
-            {{ end }}
-          </div>
-        </div>
         {{ if in .Site.Params.mainSections .Type }}
-          <div class="row">
-            <div class="col-xs-12">
-              {{ .Site.Params.postFooterContent | safeHTML }}
-            </div>
-          </div>
-
-          {{ partial "related.html" . }}
-
-          {{ if .Site.Params.postAds }}
-          <div class="post-ads">{{ .Site.Params.postAds | safeHTML }}</div>
+          {{ if and .Site.Params.showPostNavigation (or $prevPage $nextPage) }}
+          <nav class="post-nav" aria-label="{{ i18n "postNavigation" }}" data-pagefind-ignore>
+            <div>{{ with $prevPage }}<a rel="prev" href="{{ .RelPermalink }}"><span>{{ i18n "shortcutPrev" }}</span>{{ .Title }}</a>{{ end }}</div>
+            <div>{{ with $nextPage }}<a rel="next" href="{{ .RelPermalink }}"><span>{{ i18n "shortcutNext" }}</span>{{ .Title }}</a>{{ end }}</div>
+          </nav>
           {{ end }}
-
           {{ partial "giscus.html" . }}
         {{ end }}
 
-        {{ partial "footer.html" . }}
-      </div>
-    </div>
-  </article>
 
-  {{ partial "scripts.html" . }}
-  {{ if .Site.Params.extraBody }}
-  {{ .Site.Params.extraBody | safeHTML }}
-  {{ end }}
-
-</body>
-
-</html>
+{{ end }}

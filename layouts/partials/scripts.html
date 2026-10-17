@@ -1,233 +1,54 @@
+{{ $searchPage := site.GetPage "/search" }}
+<div
+  id="ui-labels"
+  hidden
+  data-code-copy="{{ i18n "codeCopy" }}"
+  data-code-copied="{{ i18n "codeCopied" }}"
+  data-code-plain-text="{{ i18n "codePlainText" }}"
+  data-search-placeholder="{{ .Site.Params.searchPlaceholder }}"
+  data-search-url="{{ with $searchPage }}{{ .RelPermalink }}{{ end }}"></div>
+
 <div class="shortcut-overlay" id="shortcut-overlay" hidden>
   <div class="shortcut-panel" role="dialog" aria-modal="true" aria-labelledby="shortcut-title">
-    <div class="shortcut-title" id="shortcut-title">快捷键</div>
-    <div class="shortcut-subtitle">Vim 风格阅读导航</div>
+    <div class="shortcut-title" id="shortcut-title">{{ i18n "shortcutTitle" }}</div>
+    <div class="shortcut-subtitle">{{ i18n "shortcutSubtitle" }}</div>
     <div class="shortcut-divider"></div>
     <div class="shortcut-list">
       <div class="shortcut-key">?</div>
-      <div class="shortcut-desc">打开或关闭提示</div>
+      <div class="shortcut-desc">{{ i18n "shortcutToggle" }}</div>
+      <div class="shortcut-key">/</div>
+      <div class="shortcut-desc">{{ i18n "shortcutSearch" }}</div>
       <div class="shortcut-key">j</div>
-      <div class="shortcut-desc">向下滚动</div>
+      <div class="shortcut-desc">{{ i18n "shortcutScrollDown" }}</div>
       <div class="shortcut-key">k</div>
-      <div class="shortcut-desc">向上滚动</div>
+      <div class="shortcut-desc">{{ i18n "shortcutScrollUp" }}</div>
       <div class="shortcut-key">d</div>
-      <div class="shortcut-desc">向下半屏</div>
+      <div class="shortcut-desc">{{ i18n "shortcutHalfPageDown" }}</div>
       <div class="shortcut-key">u</div>
-      <div class="shortcut-desc">向上半屏</div>
+      <div class="shortcut-desc">{{ i18n "shortcutHalfPageUp" }}</div>
       <div class="shortcut-key">gg</div>
-      <div class="shortcut-desc">跳到顶部</div>
+      <div class="shortcut-desc">{{ i18n "shortcutTop" }}</div>
       <div class="shortcut-key">Shift + g</div>
-      <div class="shortcut-desc">跳到底部</div>
+      <div class="shortcut-desc">{{ i18n "shortcutBottom" }}</div>
       <div class="shortcut-key" data-requires="content">t</div>
-      <div class="shortcut-desc" data-requires="content">跳到正文</div>
+      <div class="shortcut-desc" data-requires="content">{{ i18n "shortcutContent" }}</div>
       <div class="shortcut-key" data-requires="comments">c</div>
-      <div class="shortcut-desc" data-requires="comments">跳到评论区</div>
+      <div class="shortcut-desc" data-requires="comments">{{ i18n "shortcutComments" }}</div>
       <div class="shortcut-key" data-requires="prev">[</div>
-      <div class="shortcut-desc" data-requires="prev">上一篇</div>
+      <div class="shortcut-desc" data-requires="prev">{{ i18n "shortcutPrev" }}</div>
       <div class="shortcut-key" data-requires="next">]</div>
-      <div class="shortcut-desc" data-requires="next">下一篇</div>
+      <div class="shortcut-desc" data-requires="next">{{ i18n "shortcutNext" }}</div>
       <div class="shortcut-key">s</div>
-      <div class="shortcut-desc">切换主题</div>
+      <div class="shortcut-desc">{{ i18n "shortcutTheme" }}</div>
+      <div class="shortcut-key">l</div>
+      <div class="shortcut-desc">{{ i18n "shortcutLang" }}</div>
       <div class="shortcut-key">Esc</div>
-      <div class="shortcut-desc">关闭提示</div>
+      <div class="shortcut-desc">{{ i18n "shortcutClose" }}</div>
     </div>
   </div>
 </div>
 
-<button class="shortcut-hint" id="shortcut-hint" type="button" aria-label="显示快捷键帮助">?</button>
+<button class="shortcut-hint" id="shortcut-hint" type="button" aria-label="{{ i18n "shortcutHintAria" }}">?</button>
 
-<script>
-  (function () {
-    const overlay = document.getElementById('shortcut-overlay');
-    const hint = document.getElementById('shortcut-hint');
-    const article = document.getElementById('article');
-    const postContent = document.getElementById('post-content');
-    const comments = document.getElementById('post-comments');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const prevUrl = article ? article.dataset.shortcutPrev : '';
-    const nextUrl = article ? article.dataset.shortcutNext : '';
-    let gSequenceAt = 0;
-
-    function isEditableTarget(target) {
-      if (!target) {
-        return false;
-      }
-      const tagName = target.tagName;
-      if (!tagName) {
-        return false;
-      }
-      if (target.isContentEditable) {
-        return true;
-      }
-      return ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(tagName);
-    }
-
-    function scrollPageBy(top) {
-      window.scrollBy({
-        top,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
-      });
-    }
-
-    function scrollToPosition(top) {
-      window.scrollTo({
-        top,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
-      });
-    }
-
-    function scrollToElement(element) {
-      if (!element) {
-        return;
-      }
-      const top = element.getBoundingClientRect().top + window.scrollY - 12;
-      scrollToPosition(Math.max(top, 0));
-    }
-
-    function navigateTo(url) {
-      if (!url) {
-        return;
-      }
-      window.location.href = url;
-    }
-
-    function toggleOverlay(force) {
-      if (!overlay) {
-        return;
-      }
-      const shouldShow = typeof force === 'boolean' ? force : overlay.hidden;
-      overlay.hidden = !shouldShow;
-    }
-
-    function updateShortcutAvailability() {
-      const availability = {
-        content: Boolean(postContent),
-        comments: Boolean(comments),
-        prev: Boolean(prevUrl),
-        next: Boolean(nextUrl)
-      };
-
-      document.querySelectorAll('[data-requires]').forEach(function (node) {
-        node.hidden = !availability[node.dataset.requires];
-      });
-    }
-
-    document.addEventListener('keydown', function (event) {
-      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) {
-        return;
-      }
-
-      if (isEditableTarget(event.target)) {
-        return;
-      }
-
-      if (event.key === '?') {
-        event.preventDefault();
-        toggleOverlay();
-        return;
-      }
-
-      if (!overlay.hidden && event.key === 'Escape') {
-        event.preventDefault();
-        toggleOverlay(false);
-        return;
-      }
-
-      if (!overlay.hidden) {
-        return;
-      }
-
-      const viewportStep = Math.max(window.innerHeight * 0.12, 72);
-      const halfPage = window.innerHeight * 0.5;
-
-      if (event.key === 'j') {
-        event.preventDefault();
-        scrollPageBy(viewportStep);
-        return;
-      }
-
-      if (event.key === 'k') {
-        event.preventDefault();
-        scrollPageBy(-viewportStep);
-        return;
-      }
-
-      if (event.key === 'd') {
-        event.preventDefault();
-        scrollPageBy(halfPage);
-        return;
-      }
-
-      if (event.key === 'u') {
-        event.preventDefault();
-        scrollPageBy(-halfPage);
-        return;
-      }
-
-      if (event.key === 's' && typeof window.toggleTheme === 'function') {
-        event.preventDefault();
-        window.toggleTheme();
-        return;
-      }
-
-      if (event.key === 'g') {
-        const now = Date.now();
-        if (now - gSequenceAt < 600) {
-          event.preventDefault();
-          gSequenceAt = 0;
-          scrollToPosition(0);
-          return;
-        }
-        gSequenceAt = now;
-        return;
-      }
-
-      gSequenceAt = 0;
-
-      if (event.key === 'G') {
-        event.preventDefault();
-        scrollToPosition(document.documentElement.scrollHeight);
-        return;
-      }
-
-      if (event.key === 't' && postContent) {
-        event.preventDefault();
-        scrollToElement(postContent);
-        return;
-      }
-
-      if (event.key === 'c' && comments) {
-        event.preventDefault();
-        scrollToElement(comments);
-        return;
-      }
-
-      if (event.key === '[' && prevUrl) {
-        event.preventDefault();
-        navigateTo(prevUrl);
-        return;
-      }
-
-      if (event.key === ']' && nextUrl) {
-        event.preventDefault();
-        navigateTo(nextUrl);
-      }
-    });
-
-    if (overlay) {
-      overlay.addEventListener('click', function (event) {
-        if (event.target === overlay) {
-          toggleOverlay(false);
-        }
-      });
-    }
-
-    if (hint) {
-      hint.addEventListener('click', function () {
-        toggleOverlay(true);
-      });
-    }
-
-    updateShortcutAvailability();
-  })();
-</script>
+{{ $script := resources.Get "js/site.js" | minify | fingerprint }}
+<script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous" defer></script>

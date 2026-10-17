@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale }}">
+{{ partial "head.html" . }}
+<body>
+  {{ $article := and .IsPage (ne .Layout "search") }}
+  <article class="{{ if $article }}post lang-{{ .Site.Language.Lang }}{{ else }}posts{{ end }}"
+    {{ if $article }}id="article"
+      {{ if in .Site.Params.mainSections .Type }}
+        {{ with .PrevInSection }}data-shortcut-prev="{{ .RelPermalink }}"{{ end }}
+        {{ with .NextInSection }}data-shortcut-next="{{ .RelPermalink }}"{{ end }}
+      {{ end }}
+    {{ end }}>
+    <div class="row"><div class="col-xs-12">
+      {{ partial "header.html" . }}
+      {{ block "main" . }}{{ end }}
+    </div></div>
+  </article>
+  {{ partial "scripts.html" . }}
+</body>
+</html>

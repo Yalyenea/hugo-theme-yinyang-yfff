@@ -1,0 +1,95 @@
+[backHome]
+other = "返回首页"
+
+[codeCopied]
+other = "已复制"
+
+[codeCopy]
+other = "复制"
+
+[codePlainText]
+other = "文本"
+
+[langSwitchLabel]
+other = "切换语言"
+
+[navRss]
+other = "RSS"
+
+[navSearch]
+other = "搜索"
+
+[notFound]
+other = "页面不存在。"
+
+[postNavigation]
+other = "文章导航"
+
+[shortcutBottom]
+other = "跳到底部"
+
+[shortcutClose]
+other = "关闭提示"
+
+[shortcutComments]
+other = "跳到评论区"
+
+[shortcutContent]
+other = "跳到正文"
+
+[shortcutHalfPageDown]
+other = "向下半屏"
+
+[shortcutHalfPageUp]
+other = "向上半屏"
+
+[shortcutHintAria]
+other = "显示快捷键帮助"
+
+[shortcutLang]
+other = "切换语言"
+
+[shortcutNext]
+other = "下一篇"
+
+[shortcutPrev]
+other = "上一篇"
+
+[shortcutScrollDown]
+other = "向下滚动"
+
+[shortcutScrollUp]
+other = "向上滚动"
+
+[shortcutSearch]
+other = "搜索"
+
+[shortcutSubtitle]
+other = "Vim 风格阅读导航"
+
+[shortcutTheme]
+other = "切换主题"
+
+[shortcutTitle]
+other = "快捷键"
+
+[shortcutToggle]
+other = "打开或关闭提示"
+
+[shortcutTop]
+other = "跳到顶部"
+
+[siteNavigation]
+other = "站点导航"
+
+[themeSwitchToDark]
+other = "切换到深色模式"
+
+[themeSwitchToLight]
+other = "切换到浅色模式"
+
+[themeToggleLabel]
+other = "切换主题"
+
+[tocTitle]
+other = "目录"

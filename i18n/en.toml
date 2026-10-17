@@ -1,0 +1,95 @@
+[backHome]
+other = "Back to home"
+
+[codeCopied]
+other = "Copied"
+
+[codeCopy]
+other = "Copy"
+
+[codePlainText]
+other = "Text"
+
+[langSwitchLabel]
+other = "Switch language"
+
+[navRss]
+other = "RSS"
+
+[navSearch]
+other = "Search"
+
+[notFound]
+other = "Page not found."
+
+[postNavigation]
+other = "Article navigation"
+
+[shortcutBottom]
+other = "Jump to the bottom"
+
+[shortcutClose]
+other = "Close the help overlay"
+
+[shortcutComments]
+other = "Jump to comments"
+
+[shortcutContent]
+other = "Jump to article content"
+
+[shortcutHalfPageDown]
+other = "Half-page down"
+
+[shortcutHalfPageUp]
+other = "Half-page up"
+
+[shortcutHintAria]
+other = "Show keyboard shortcut help"
+
+[shortcutLang]
+other = "Switch language"
+
+[shortcutNext]
+other = "Next post"
+
+[shortcutPrev]
+other = "Previous post"
+
+[shortcutScrollDown]
+other = "Scroll down"
+
+[shortcutScrollUp]
+other = "Scroll up"
+
+[shortcutSearch]
+other = "Search"
+
+[shortcutSubtitle]
+other = "Vim-style reading navigation"
+
+[shortcutTheme]
+other = "Toggle theme"
+
+[shortcutTitle]
+other = "Shortcuts"
+
+[shortcutToggle]
+other = "Open or close the help overlay"
+
+[shortcutTop]
+other = "Jump to the top"
+
+[siteNavigation]
+other = "Site navigation"
+
+[themeSwitchToDark]
+other = "Switch to dark mode"
+
+[themeSwitchToLight]
+other = "Switch to light mode"
+
+[themeToggleLabel]
+other = "Toggle theme"
+
+[tocTitle]
+other = "Contents"

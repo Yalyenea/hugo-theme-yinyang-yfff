@@ -1,0 +1,102 @@
+:root {
+  --pseudocode-bg: #fffaf3;
+  --pseudocode-line: #dfdad9;
+  --pseudocode-accent: #907aa9;
+  --pseudocode-label: #286983;
+}
+[data-theme="dark"] {
+  --pseudocode-bg: #2a273f;
+  --pseudocode-line: #393552;
+  --pseudocode-accent: #c4a7e7;
+  --pseudocode-label: #9ccfd8;
+}
+
+/* pseudocode */
+
+.pseudocode-block {
+    margin: 1.2em 0;
+    overflow: hidden;
+    border: 1px solid var(--pseudocode-line);
+    border-radius: 8px;
+    background: var(--pseudocode-bg);
+    color: var(--text-color);
+    font-size: 0.94em;
+}
+
+.pseudocode-title {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--pseudocode-line);
+    color: var(--pseudocode-accent);
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+.pseudocode-body {
+    counter-reset: pseudocode-step;
+    padding: 8px 0;
+}
+
+.pseudocode-row {
+    display: grid;
+    grid-template-columns: 3.2rem max-content minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: baseline;
+    padding: 5px 14px;
+    line-height: 1.7;
+}
+
+.pseudocode-step {
+    counter-increment: pseudocode-step;
+}
+
+.pseudocode-step::before {
+    content: counter(pseudocode-step);
+    color: var(--secondary-text);
+    font-family: var(--font-mono);
+    font-size: 0.82em;
+    text-align: right;
+}
+
+.pseudocode-meta::before {
+    content: "";
+}
+
+.pseudocode-label {
+    color: var(--pseudocode-label);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.pseudocode-content {
+    min-width: 0;
+    padding-left: calc(var(--pseudo-indent, 0) * 1.2rem);
+    overflow-wrap: normal;
+}
+
+.pseudocode-label:empty {
+    display: none;
+}
+
+.pseudocode-label:empty + .pseudocode-content {
+    grid-column: 2 / 4;
+}
+
+.pseudocode-block .katex {
+    font-size: 1em;
+}
+
+@media screen and (max-width: 600px) {
+    .pseudocode-title {
+        padding: 9px 12px;
+    }
+
+    .pseudocode-row {
+        grid-template-columns: 2.4rem max-content minmax(0, 1fr);
+        column-gap: 10px;
+        padding: 5px 12px;
+    }
+
+    .pseudocode-content {
+        padding-left: calc(var(--pseudo-indent, 0) * 0.9rem);
+    }
+}
